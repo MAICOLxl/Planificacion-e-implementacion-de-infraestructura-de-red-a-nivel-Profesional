@@ -1,0 +1,1 @@
+# Lo primero a tener en cuenta en el diseño de una red es el alcance que esta tendra y recursos economicos disponibles. En mi caso mi proposito es crear una nube privada capaz de brindarme un espacio de trabajo flexible, robusto y eficiente en cuanto a la inversion.
