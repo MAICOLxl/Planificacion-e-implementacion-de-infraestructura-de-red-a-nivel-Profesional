@@ -12,5 +12,13 @@ La razon es que quiero diseñar una red Multi-Vendor y no depender unicamente de
 
 Servidor
 
+Para este asunto dispuse de mi vieja PC con las siguientes specs, cual he eliminado la gpu y la refrigeracion por agua para tener una eficiencia energetica lo mejor posible.
+i5 11600 2.7GhZ 6 nucleos a 12 hilos
+32 GB DDR4 3200 Mhz
+NVDIA RTX2060
+NZXT KRAKEN WATER PUMP
+512 GB NVME a 3GB/S
+EVGA 650W GOLD 
+
 
 
