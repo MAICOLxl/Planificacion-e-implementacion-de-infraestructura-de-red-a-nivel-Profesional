@@ -1,2 +1,1 @@
-# Planificacion-e-implementacion-de-infraestructura-de-red-a-nivel-Profesional
-El objetivo de este proyecto es montar una infraestructura flexible y escalable que se esta desplegando a pequeña escala. Para esto disponemos de un firewall fortigate 60e Poe, Switch L3 Cisco SG350 y servidor con fines de nube privada.
+# Diseño e implementación de una infraestructura de red flexible y escalable, desplegada inicialmente a pequeña escala: firewall FortiGate 60E PoE, switch L3 Cisco SG350 y servidor destinado a nube privada. Esta Arquitectura esta pensada para incorporar servicios adicionales a medida que el proyecto crece.
