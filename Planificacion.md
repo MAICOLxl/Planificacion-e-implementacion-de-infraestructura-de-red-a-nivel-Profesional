@@ -7,5 +7,10 @@ como de acceso remoto, SD-WAN, inspeccion profunda de paquetes y se pueden encon
 
 Acceso a la red
 
-Cisco Switch SG350 ofrece  
+Cisco Switch SG350-28P ofrece 24 puertos Gigabit Poe + 2 puertos SFP a 2 Gigabit + 2 puertos Gigabit T/SFP. Es un equipo de uso empresarial y al similar al fortigate, es un equipo de calidad y ampliamente documentado. Una decision de diseño a cuestionar es ¿ porque no elegir un FortiSwitch ?
+La razon es que quiero diseñar una red Multi-Vendor y no depender unicamente de una compañia para toda la red.
+
+Servidor
+
+
 
