@@ -1,0 +1,36 @@
+Uno de los problemas para abrir mi aplicacion hosteada fue el doble nat el cual tiene varios metodos con los que se peden solventar pero a mi mente llegaron 2 opciones:
+
+1.ONT Bridge - Via el ISP o proveedor de servicios.
+
+En mi caso mi proveedor de servicios ofrece el direccionamiento publico de forma dinamica (NO CGNAT), es decir 1:1 a los clientes y esto viene genial porque solo debes poner tu ONT en modo bridge con el Fortigate para que el reciba el direccionamiento publico a traves de su propia interfaz y hacer NAT solo con la red interna. El problema es que hay casos donde la ONT viene restringida y solo se puede resolver por una modificacion del SLA.
+
+2. CloudFlare
+
+Esta opción requiere contar con un dominio público propio. Como el montaje de una VPN o la apertura de puertos no son viables debido a las restricciones del doble NAT en la ONT, la estrategia elegida consiste en levantar un túnel cifrado de salida entre nuestro servidor local y los servidores perimetrales (Edge) de Cloudflare.
+
+Para lograr esto, delegamos la gestión DNS de nuestro dominio a Cloudflare y creamos un túnel en su plataforma de Zero Trust. La magia de este método radica en que el agente local cloudflared inicia una conexión saliente, rompiendo el doble NAT de forma automática sin exponer vulnerabilidades hacia internet.
+
+Paso 1: Delegación de DNS y Preparación en la Nube
+Configuramos nuestro dominio dentro del panel de Cloudflare y modificamos los Nameservers en nuestro registrador de dominios para apuntar a la zona DNS de Cloudflare. Una vez activo, procedimos a crear el túnel en el módulo de Zero Trust, el cual nos generó un Token de autenticación único y secreto.
+
+📸 [INSERTAR IMAGEN 1 AQUÍ]: Captura de pantalla de la interfaz de Cloudflare Zero Trust en la pestaña "Install and run connectors", donde se visualiza el comando de instalación y el Token alfanumérico (eyJhSGl...).
+
+Paso 2: Despliegue con Podman
+Para mantener el servidor limpio y seguro, decidimos no instalar el agente directamente en el sistema operativo del host. En su lugar, desplegamos el conector utilizando un contenedor de Podman en modo rootless, ejecutando el siguiente bloque de comandos:
+
+bash
+podman run -d \
+  --name cloudflared-tunnel \
+  --net=host \
+  --restart=always \
+  docker.io/cloudflare/cloudflared:latest \
+  tunnel --no-autoupdate run --token <TU_TOKEN_SECRETO_AQUÍ>
+  
+Usa el código con precaución.
+• --net=host: Permite al contenedor del túnel comunicarse de forma directa con la aplicación local de OpenProject a través de localhost, evadiendo el aislamiento interno de la red de contenedores.
+
+• docker.io/...: En Podman se define el registro explícito para descargar la imagen oficial de Cloudflare desde Docker Hub.
+Paso 3: Mapeo del Hostname Público
+Finalmente, de vuelta en el panel web, ruteamos el tráfico vinculando un subdominio específico a la dirección interna de nuestro servidor.
+
+📸 [INSERTAR IMAGEN 2 AQUÍ]: Captura de la pestaña "Public Hostname" en Cloudflare configurando el Subdomain (openproject), el Domain (isadomi.com) y apuntando al servicio local (HTTP://localhost:8080).
